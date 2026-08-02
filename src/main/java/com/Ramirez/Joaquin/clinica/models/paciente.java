@@ -12,9 +12,8 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "pacientes")
-public class paciente {
+public class Paciente {
     
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,7 +32,7 @@ public class paciente {
 
     private String telefono;
 
-    public paciente() {
+    public Paciente() {
     }
 
     public Long getId() {
