@@ -8,9 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.Ramirez.Joaquin.clinica.models.Paciente;
-import com.Ramirez.Joaquin.clinica.repositories.PacienteRepository;
+import com.Ramirez.Joaquin.clinica.services.PacienteService;
 
 import java.util.List;
 
@@ -18,20 +17,27 @@ import java.util.List;
 @RequestMapping("/api/pacientes")
 public class PacienteController {
 
+    //Mover las inyecciones del repositorio a la capa de servicio para mantener la lógica de negocio separada del controlador.
+    @Autowired
+    private PacienteService pacienteService;
+
+    /* 
+    Ejemplo de cómo se vería si se inyectara el repositorio directamente en el controlador, lo cual no es recomendable.
     @Autowired
     private PacienteRepository pacienteRepository;
+    */
 
     //endpoint para guardar pacientes
     @PostMapping
     public ResponseEntity<Paciente> crearPaciente(@RequestBody Paciente paciente) {
-        Paciente pacienteGuardado = pacienteRepository.save(paciente);
+        Paciente pacienteGuardado = pacienteService.pacienteGuardado(paciente);
         return new ResponseEntity<>(pacienteGuardado, HttpStatus.CREATED);
     }
 
     //endpoint para listar pacientes
     @GetMapping
     public ResponseEntity<List<Paciente>> listarPacientes() {
-        List<Paciente> pacientes = pacienteRepository.findAll();
+        List<Paciente> pacientes = pacienteService.listarPacientes();
         return new ResponseEntity<>(pacientes, HttpStatus.OK);
     }
 
