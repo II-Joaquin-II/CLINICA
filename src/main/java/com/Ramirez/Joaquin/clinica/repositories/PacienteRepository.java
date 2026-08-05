@@ -8,6 +8,7 @@ import java.util.Optional;
 @Repository
 public interface PacienteRepository extends JpaRepository<Paciente, Long> {
 
+    //Spring creara automáticamente la consulta para buscar un paciente por su DNI
     Optional<Paciente> findByDni(String dni);
     
 }
