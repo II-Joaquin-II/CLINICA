@@ -24,10 +24,12 @@ public class Cita {
 
     private String motivo;
 
+    // Muchas Citas pertenecen a Un Paciente
     @ManyToOne
     @JoinColumn(name = "paciente_id", nullable = false)
     private Paciente paciente; 
 
+    // Muchas Citas pertenecen a Un Medico
     @ManyToOne
     @JoinColumn(name = "medico_id", nullable = false)
     private Medico medico;
