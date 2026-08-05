@@ -1,6 +1,5 @@
 package com.Ramirez.Joaquin.clinica.models;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,9 +8,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "pacientes")
-public class Paciente {
-    
+@Table(name = "medicos")
+public class Medico {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,15 +21,13 @@ public class Paciente {
     @Column(nullable = false, length = 50)
     private String apellido;
 
-    @Column(nullable = false, length = 8, unique = true)
-    private String dni;
+    @Column(nullable = false, length = 50)
+    private String especialidad;
 
-    @Column(unique = true)
-    private String email;
+    @Column(nullable = false, length = 20, unique = true)
+    private String matricula;
 
-    private String telefono;
-
-    public Paciente() {
+    public Medico() {
     }
 
     public Long getId() {
@@ -57,28 +54,20 @@ public class Paciente {
         this.apellido = apellido;
     }
 
-    public String getDni() {
-        return dni;
+    public String getEspecialidad() {
+        return especialidad;
     }
 
-    public void setDni(String dni) {
-        this.dni = dni;
+    public void setEspecialidad(String especialidad) {
+        this.especialidad = especialidad;
     }
 
-    public String getEmail() {
-        return email;
+    public String getMatricula() {
+        return matricula;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
     }
 
     
