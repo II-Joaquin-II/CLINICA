@@ -1,5 +1,7 @@
 package com.Ramirez.Joaquin.clinica.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.Ramirez.Joaquin.clinica.dtos.CitaDTO;
@@ -38,6 +40,10 @@ public class CitaService {
 
         //3. Guardamos en la base de datos
         return citaRepository.save(nuevaCita); 
+    }
+
+    public List<Cita> listarCitas() {
+        return citaRepository.findAll();
     }
 
 }
