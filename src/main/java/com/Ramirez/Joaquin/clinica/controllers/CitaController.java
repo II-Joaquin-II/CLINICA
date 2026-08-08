@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.Ramirez.Joaquin.clinica.dtos.CitaDTO;
 import com.Ramirez.Joaquin.clinica.models.Cita;
 import com.Ramirez.Joaquin.clinica.services.CitaService;
-
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,10 +24,8 @@ public class CitaController {
     private CitaService citaService;
 
     @PostMapping
-    public ResponseEntity<Cita> agendarCita(@RequestBody CitaDTO citaDTO) {
-
+    public ResponseEntity<Cita> agendarCita(@Valid @RequestBody CitaDTO citaDTO) {
         Cita citaGuardada = citaService.agendarCita(citaDTO);
-
         return new ResponseEntity<>(citaGuardada, HttpStatus.CREATED);
     }
 
