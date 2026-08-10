@@ -31,7 +31,14 @@ public class CitaService {
 
         Medico medico = medicoRepository.findById(citaDTO.getMedicoId()).orElseThrow(() -> new RuntimeException("Médico no encontrado"));
 
-        //2. Creamos la Entidad Cita real
+        //2. Nueva regla de negocio: Validar y evitar choques de horarios  
+        boolean citaOcupada = citaRepository.existsByMedicoIdAndFechaHora(citaDTO.getMedicoId(), citaDTO.getFechaHora());
+
+        if (citaOcupada) {
+            throw new RuntimeException("El médico ya tiene una cita en esa fecha y hora");
+        }
+
+        //3. Creamos la Entidad Cita real
         Cita nuevaCita = new Cita();
         nuevaCita.setFechaHora(citaDTO.getFechaHora());
         nuevaCita.setMotivo(citaDTO.getMotivo());
