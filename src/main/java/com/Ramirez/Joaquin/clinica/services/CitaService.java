@@ -33,7 +33,11 @@ public class CitaService {
         Medico medico = medicoRepository.findById(citaDTO.getMedicoId()).orElseThrow(() -> new RuntimeException("Médico no encontrado"));
 
         //2. Nueva regla de negocio: Validar y evitar choques de horarios  
-        boolean citaOcupada = citaRepository.existsByMedicoIdAndFechaHora(citaDTO.getMedicoId(), citaDTO.getFechaHora(), citaDTO.getEstado());
+        boolean citaOcupada = citaRepository.existsByMedicoIdAndFechaHoraAndEstadoNot(
+            citaDTO.getMedicoId(),
+            citaDTO.getFechaHora(),
+            EstadoCita.CANCELADA
+        );
 
         if (citaOcupada) {
             throw new RuntimeException("El médico ya tiene una cita en esa fecha y hora");

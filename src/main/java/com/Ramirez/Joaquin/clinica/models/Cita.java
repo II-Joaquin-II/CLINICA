@@ -30,7 +30,8 @@ public class Cita {
 
     //Spring lo guarda en texto del Enum y no en numero
     @Enumerated(EnumType.STRING)
-    private EstadoCita estado;
+    @Column(nullable = false)
+    private EstadoCita estado = EstadoCita.PENDIENTE;
 
     // Muchas Citas pertenecen a Un Paciente
     @ManyToOne
@@ -92,7 +93,5 @@ public class Cita {
     public void setEstado(EstadoCita estado) {
         this.estado = estado;
     }
-
-    
 
 }

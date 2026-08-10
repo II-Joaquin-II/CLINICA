@@ -21,8 +21,6 @@ public class CitaDTO {
     @NotNull(message = "El ID del médico es obligatorio")
     private Long medicoId;
 
-    @NotNull(message = "El estado de la cita es obligatorio")
-    private com.Ramirez.Joaquin.clinica.enums.EstadoCita estado;
 
     public CitaDTO() {
     }
@@ -59,12 +57,6 @@ public class CitaDTO {
         this.medicoId = medicoId;
     }
 
-    public com.Ramirez.Joaquin.clinica.enums.EstadoCita getEstado() {
-        return estado;
-    }
 
-    public void setEstado(com.Ramirez.Joaquin.clinica.enums.EstadoCita estado) {
-        this.estado = estado;
-    }
 
 }
