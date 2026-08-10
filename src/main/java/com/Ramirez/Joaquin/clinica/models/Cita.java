@@ -2,8 +2,12 @@ package com.Ramirez.Joaquin.clinica.models;
 
 import java.time.LocalDateTime;
 
+import com.Ramirez.Joaquin.clinica.enums.EstadoCita;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,6 +27,10 @@ public class Cita {
     private LocalDateTime fechaHora;
 
     private String motivo;
+
+    //Spring lo guarda en texto del Enum y no en numero
+    @Enumerated(EnumType.STRING)
+    private EstadoCita estado;
 
     // Muchas Citas pertenecen a Un Paciente
     @ManyToOne
@@ -75,6 +83,14 @@ public class Cita {
 
     public void setMedico(Medico medico) {
         this.medico = medico;
+    }
+
+    public EstadoCita getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoCita estado) {
+        this.estado = estado;
     }
 
     

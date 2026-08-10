@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.Ramirez.Joaquin.clinica.dtos.CitaDTO;
+import com.Ramirez.Joaquin.clinica.enums.EstadoCita;
 import com.Ramirez.Joaquin.clinica.models.Cita;
 import com.Ramirez.Joaquin.clinica.models.Medico;
 import com.Ramirez.Joaquin.clinica.models.Paciente;
@@ -32,7 +33,7 @@ public class CitaService {
         Medico medico = medicoRepository.findById(citaDTO.getMedicoId()).orElseThrow(() -> new RuntimeException("Médico no encontrado"));
 
         //2. Nueva regla de negocio: Validar y evitar choques de horarios  
-        boolean citaOcupada = citaRepository.existsByMedicoIdAndFechaHora(citaDTO.getMedicoId(), citaDTO.getFechaHora());
+        boolean citaOcupada = citaRepository.existsByMedicoIdAndFechaHora(citaDTO.getMedicoId(), citaDTO.getFechaHora(), citaDTO.getEstado());
 
         if (citaOcupada) {
             throw new RuntimeException("El médico ya tiene una cita en esa fecha y hora");
@@ -44,9 +45,18 @@ public class CitaService {
         nuevaCita.setMotivo(citaDTO.getMotivo());
         nuevaCita.setPaciente(paciente);
         nuevaCita.setMedico(medico);
+        //Nuevo campo estado, por defecto será PENDIENTE al crear la cita
+        nuevaCita.setEstado(EstadoCita.PENDIENTE);
 
         //3. Guardamos en la base de datos
         return citaRepository.save(nuevaCita); 
+    }
+
+    public Cita cancelarCita(Long idCita) {
+        Cita cita = citaRepository.findById(idCita).orElseThrow(() -> new RuntimeException("Cita no encontrada"));
+
+        cita.setEstado(EstadoCita.CANCELADA);
+        return citaRepository.save(cita);
     }
 
     public List<Cita> listarCitas() {

@@ -12,7 +12,9 @@ import com.Ramirez.Joaquin.clinica.models.Cita;
 import com.Ramirez.Joaquin.clinica.services.CitaService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
@@ -33,6 +35,12 @@ public class CitaController {
     public ResponseEntity<List<Cita>> listarCitas() {
         List<Cita> citas = citaService.listarCitas();
         return new ResponseEntity<>(citas, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}/cancelar")
+    public ResponseEntity<Cita> cancelarCitar(@PathVariable Long id) {
+        Cita citaCancelada = citaService.cancelarCita(id);
+        return new ResponseEntity<>(citaCancelada, HttpStatus.OK);
     }
 
 }
