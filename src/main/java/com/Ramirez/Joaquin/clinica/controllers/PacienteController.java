@@ -1,12 +1,14 @@
 package com.Ramirez.Joaquin.clinica.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.Ramirez.Joaquin.clinica.models.Paciente;
 import com.Ramirez.Joaquin.clinica.services.PacienteService;
@@ -35,10 +37,23 @@ public class PacienteController {
     }
 
     //endpoint para listar pacientes
+    /* 
     @GetMapping
     public ResponseEntity<List<Paciente>> listarPacientes() {
         List<Paciente> pacientes = pacienteService.listarPacientes();
         return new ResponseEntity<>(pacientes, HttpStatus.OK);
+    }
+    */
+
+    @GetMapping
+    public ResponseEntity<List<Paciente>> listarPacientes(
+
+        @RequestParam(defaultValue = "0") int numeroDePagina,
+        @RequestParam(defaultValue = "10") int tamanoDePagina
+
+    ) {
+        Page<Paciente> pacientes = pacienteService.obtenerTodosLosPacientes(numeroDePagina, tamanoDePagina);
+        return new ResponseEntity<>(pacientes.getContent(), HttpStatus.OK);
     }
 
 }
