@@ -1,13 +1,14 @@
 package com.Ramirez.Joaquin.clinica.controllers;
 
 import java.util.List;
-
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.Ramirez.Joaquin.clinica.dtos.CitaDTO;
+import com.Ramirez.Joaquin.clinica.dtos.CitaResponseDTO;
 import com.Ramirez.Joaquin.clinica.models.Cita;
 import com.Ramirez.Joaquin.clinica.services.CitaService;
 import jakarta.validation.Valid;
@@ -56,9 +57,23 @@ public class CitaController {
 
     //endpoint para ver la agenda de un medico
     @GetMapping("/medico/{medicoId}")
+    public ResponseEntity<List<CitaResponseDTO>> listarCitasPorMedico(@PathVariable Long medicoId) {
+        List<Cita> citas = citaService.obtenerCitasPorMedico(medicoId);
+
+        List<CitaResponseDTO> citasDTO = citas.stream()
+                .map(CitaResponseDTO::new)
+                .collect(Collectors.toList());
+
+        return new ResponseEntity<>(citasDTO, HttpStatus.OK);
+    }
+
+
+    /* 
+    @GetMapping("/medico/{medicoId}")
     public ResponseEntity<List<Cita>> listarCitasPorMedico(@PathVariable Long medicoId) {
         List<Cita> citas = citaService.obtenerCitasPorMedico(medicoId);
         return new ResponseEntity<>(citas, HttpStatus.OK);
     }
+    */
 
 }
