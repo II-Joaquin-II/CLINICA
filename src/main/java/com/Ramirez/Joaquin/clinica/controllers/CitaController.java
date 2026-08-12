@@ -1,11 +1,13 @@
 package com.Ramirez.Joaquin.clinica.controllers;
 
+import com.Ramirez.Joaquin.clinica.repositories.CitaRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.Ramirez.Joaquin.clinica.dtos.CitaDTO;
 import com.Ramirez.Joaquin.clinica.dtos.CitaResponseDTO;
@@ -13,7 +15,6 @@ import com.Ramirez.Joaquin.clinica.models.Cita;
 import com.Ramirez.Joaquin.clinica.services.CitaService;
 import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,10 +31,20 @@ public class CitaController {
 
     //endpoint para agendar citas
     @PostMapping
+    public ResponseEntity<CitaResponseDTO> agendarCita(@Valid @RequestBody CitaDTO citaDTO) {
+        Cita citaGuardada = citaService.agendarCita(citaDTO);
+        CitaResponseDTO respuesta = new CitaResponseDTO(citaGuardada);
+        return new ResponseEntity<>(respuesta, HttpStatus.CREATED);
+    }
+
+    /* 
+    version antigua
+    @PostMapping
     public ResponseEntity<Cita> agendarCita(@Valid @RequestBody CitaDTO citaDTO) {
         Cita citaGuardada = citaService.agendarCita(citaDTO);
         return new ResponseEntity<>(citaGuardada, HttpStatus.CREATED);
     }
+    */
 
     //endpoint para listar citas
     @GetMapping
@@ -62,14 +73,6 @@ public class CitaController {
         return new ResponseEntity<>(citasDTO, HttpStatus.OK);
     }    
 
-    /* version antigua
-    @GetMapping("/paciente/{pacienteId}")
-    public ResponseEntity<List<Cita>> listarCitasPorPaciente(@PathVariable Long pacienteId) {
-        List<Cita> citas = citaService.obtenerCitasPorPaciente(pacienteId);
-        return new ResponseEntity<>(citas, HttpStatus.OK);
-    }
-    */
-
     //endpoint para ver la agenda de un medico
     @GetMapping("/medico/{medicoId}")
     public ResponseEntity<List<CitaResponseDTO>> listarCitasPorMedico(@PathVariable Long medicoId) {
@@ -81,14 +84,5 @@ public class CitaController {
 
         return new ResponseEntity<>(citasDTO, HttpStatus.OK);
     }
-
-
-    /* Version antigua 
-    @GetMapping("/medico/{medicoId}")
-    public ResponseEntity<List<Cita>> listarCitasPorMedico(@PathVariable Long medicoId) {
-        List<Cita> citas = citaService.obtenerCitasPorMedico(medicoId);
-        return new ResponseEntity<>(citas, HttpStatus.OK);
-    }
-    */
 
 }
