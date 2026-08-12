@@ -1,8 +1,10 @@
 package com.Ramirez.Joaquin.clinica.services;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.Ramirez.Joaquin.clinica.dtos.CitaDTO;
 import com.Ramirez.Joaquin.clinica.enums.EstadoCita;
@@ -63,9 +65,18 @@ public class CitaService {
         return citaRepository.save(cita);
     }
 
+    /* 
     //Metodo para listar todas las citas
     public List<Cita> listarCitas() {
         return citaRepository.findAll();
+    }
+    */
+
+    //Metodo para listar citas con paginacion 
+    public Page<Cita> obtenertodasLasCitas(int page, int size) {
+        Pageable paginacion = PageRequest.of(page, size);
+        return citaRepository.findAll(paginacion);
+
     }
 
     //Metodo para obtener el historial del paciente por su ID

@@ -1,20 +1,19 @@
 package com.Ramirez.Joaquin.clinica.controllers;
 
-import com.Ramirez.Joaquin.clinica.repositories.CitaRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.Ramirez.Joaquin.clinica.dtos.CitaDTO;
 import com.Ramirez.Joaquin.clinica.dtos.CitaResponseDTO;
 import com.Ramirez.Joaquin.clinica.models.Cita;
 import com.Ramirez.Joaquin.clinica.services.CitaService;
 import jakarta.validation.Valid;
-import jakarta.websocket.server.PathParam;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,22 +36,18 @@ public class CitaController {
         return new ResponseEntity<>(respuesta, HttpStatus.CREATED);
     }
 
-    /* 
-    version antigua
-    @PostMapping
-    public ResponseEntity<Cita> agendarCita(@Valid @RequestBody CitaDTO citaDTO) {
-        Cita citaGuardada = citaService.agendarCita(citaDTO);
-        return new ResponseEntity<>(citaGuardada, HttpStatus.CREATED);
-    }
-    */
-
     //endpoint para listar citas
     @GetMapping
-    public ResponseEntity<List<Cita>> listarCitas() {
-        List<Cita> citas = citaService.listarCitas();
-        return new ResponseEntity<>(citas, HttpStatus.OK);
+    public ResponseEntity<Page<CitaResponseDTO>> listarCitas(
+
+        @RequestParam(defaultValue =  "0") int page,
+        @RequestParam(defaultValue = "10") int size
+
+    ) {
+        Page<Cita> citas = citaService.obtenertodasLasCitas(page, size);
+        Page<CitaResponseDTO> citasDTO = citas.map(CitaResponseDTO::new);
+        return new ResponseEntity<>(citasDTO, HttpStatus.OK);
     }
-    
 
     //endopint para cancelar citas
     @PutMapping("/{id}/cancelar")
