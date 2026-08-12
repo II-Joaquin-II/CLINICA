@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.Ramirez.Joaquin.clinica.models.Paciente;
 import com.Ramirez.Joaquin.clinica.services.PacienteService;
-import jakarta.websocket.server.PathParam;
-
 import java.util.List;
 
 @RestController
@@ -37,15 +35,6 @@ public class PacienteController {
         Paciente pacienteGuardado = pacienteService.pacienteGuardado(paciente);
         return new ResponseEntity<>(pacienteGuardado, HttpStatus.CREATED);
     }
-
-    //endpoint para listar pacientes
-    /* 
-    @GetMapping
-    public ResponseEntity<List<Paciente>> listarPacientes() {
-        List<Paciente> pacientes = pacienteService.listarPacientes();
-        return new ResponseEntity<>(pacientes, HttpStatus.OK);
-    }
-    */
 
     //endpoint para listar pacientes con paginacion
     @GetMapping
