@@ -28,9 +28,9 @@ public class PacienteService {
     */
 
     //Metodo de paginacion 
-    public Page<Paciente> obtenerTodosLosPacientes(int numeroDePagina, int tamanoDePagina) {
+    public Page<Paciente> obtenerTodosLosPacientes(int page, int size) {
         //Crear un objeto Pageable con el número de página y el tamaño de página
-        Pageable paginacion = PageRequest.of(numeroDePagina, tamanoDePagina);
+        Pageable paginacion = PageRequest.of(page, size);
         //El repositorio devuelve un objeto Page en lugar de un List
         return pacienteRepository.findAll(paginacion);
     }

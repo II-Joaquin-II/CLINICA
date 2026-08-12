@@ -48,11 +48,11 @@ public class PacienteController {
     @GetMapping
     public ResponseEntity<List<Paciente>> listarPacientes(
 
-        @RequestParam(defaultValue = "0") int numeroDePagina,
-        @RequestParam(defaultValue = "10") int tamanoDePagina
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size
 
     ) {
-        Page<Paciente> pacientes = pacienteService.obtenerTodosLosPacientes(numeroDePagina, tamanoDePagina);
+        Page<Paciente> pacientes = pacienteService.obtenerTodosLosPacientes(page, size);
         return new ResponseEntity<>(pacientes.getContent(), HttpStatus.OK);
     }
 
