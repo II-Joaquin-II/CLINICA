@@ -2,6 +2,7 @@ package com.Ramirez.Joaquin.clinica.services;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,16 +17,6 @@ public class PacienteService {
     @Autowired
     private PacienteRepository pacienteRepository;
 
-    //Metodo para guardar pacientes, que se puede llamar desde el controlador.
-    public Paciente pacienteGuardado(Paciente paciente) {
-        return pacienteRepository.save(paciente);
-    }
-
-    //Metodo para listar pacientes, que se puede llamar desde el controlador.
-    /* 
-    public List<Paciente> listarPacientes() {
-        return pacienteRepository.findAll();
-    */
 
     //Metodo de paginacion 
     public Page<Paciente> obtenerTodosLosPacientes(int page, int size) {
@@ -33,6 +24,21 @@ public class PacienteService {
         Pageable paginacion = PageRequest.of(page, size);
         //El repositorio devuelve un objeto Page en lugar de un List
         return pacienteRepository.findAll(paginacion);
+    }
+
+    //Metodo para guardar pacientes, que se puede llamar desde el controlador.
+    public Paciente pacienteGuardado(Paciente paciente) {
+        return pacienteRepository.save(paciente);
+    }
+
+    //Metodo buscar pacientes por id
+    public Paciente listarPacientesPorId(Long id) {
+        return pacienteRepository.findById(id).orElseThrow(() -> new RuntimeException("Paciente no encontrado con id: " + id));
+    }
+    
+    //Metodo para buscar pacientes por DNI
+    public Paciente listarPacientesPorDni(String dni) {
+        return pacienteRepository.findByDni(dni).orElseThrow(() -> new RuntimeException("DNI del paciente no encontrado: " + dni));
     }
 
 }

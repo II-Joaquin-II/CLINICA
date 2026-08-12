@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.Ramirez.Joaquin.clinica.models.Paciente;
 import com.Ramirez.Joaquin.clinica.services.PacienteService;
+import jakarta.websocket.server.PathParam;
 
 import java.util.List;
 
@@ -45,6 +47,7 @@ public class PacienteController {
     }
     */
 
+    //endpoint para listar pacientes con paginacion
     @GetMapping
     public ResponseEntity<List<Paciente>> listarPacientes(
 
@@ -54,6 +57,20 @@ public class PacienteController {
     ) {
         Page<Paciente> pacientes = pacienteService.obtenerTodosLosPacientes(page, size);
         return new ResponseEntity<>(pacientes.getContent(), HttpStatus.OK);
+    }
+
+    //endpoint para buscar pacientes por id
+    @GetMapping("/{id}")
+    public ResponseEntity<Paciente> listarPacientesPorId(@PathVariable Long id) {
+        Paciente paciente = pacienteService.listarPacientesPorId(id);
+        return new ResponseEntity<>(paciente, HttpStatus.OK);
+    }
+
+    //endpoint para buscar pacientes por DNI
+    @GetMapping("/dni/{dni}")
+    public ResponseEntity<Paciente> listarPacientesPorDni(@PathVariable String dni) {
+        Paciente paciente = pacienteService.listarPacientesPorDni(dni);
+        return new ResponseEntity<>(paciente, HttpStatus.OK);
     }
 
 }
