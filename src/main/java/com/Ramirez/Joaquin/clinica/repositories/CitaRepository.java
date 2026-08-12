@@ -1,6 +1,7 @@
 package com.Ramirez.Joaquin.clinica.repositories;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -11,6 +12,12 @@ public interface CitaRepository extends JpaRepository<Cita, Long> {
     
     //Spring --> "SELECT count(*) FROM citas WHERE medico_id = ? AND fecha_hora = ?"
     boolean existsByMedicoIdAndFechaHora(Long medicoId, LocalDateTime fechaHora);
+
+    //Spring --> "SELECT count(*) FROM citas WHERE medico_id = ? AND fecha_hora = ? AND estado != ?"
     boolean existsByMedicoIdAndFechaHoraAndEstadoNot(Long medicoId, LocalDateTime fechaHora, com.Ramirez.Joaquin.clinica.enums.EstadoCita estado);
 
+    List<Cita> findByPacienteId(Long pacienteId); 
+
+    List<Cita> findByMedicoId(Long medicoId); 
+ 
 }

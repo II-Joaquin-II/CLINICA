@@ -25,22 +25,40 @@ public class CitaController {
     @Autowired
     private CitaService citaService;
 
+    //endpoint para agendar citas
     @PostMapping
     public ResponseEntity<Cita> agendarCita(@Valid @RequestBody CitaDTO citaDTO) {
         Cita citaGuardada = citaService.agendarCita(citaDTO);
         return new ResponseEntity<>(citaGuardada, HttpStatus.CREATED);
     }
 
+    //endpoint para listar citas
     @GetMapping
     public ResponseEntity<List<Cita>> listarCitas() {
         List<Cita> citas = citaService.listarCitas();
         return new ResponseEntity<>(citas, HttpStatus.OK);
     }
+    
 
+    //endopint para cancelar citas
     @PutMapping("/{id}/cancelar")
     public ResponseEntity<Cita> cancelarCitar(@PathVariable Long id) {
         Cita citaCancelada = citaService.cancelarCita(id);
         return new ResponseEntity<>(citaCancelada, HttpStatus.OK);
+    }
+
+    //endpoint para ver el historial de un paciente
+    @GetMapping("/paciente/{pacienteId}")
+    public ResponseEntity<List<Cita>> listarCitasPorPaciente(@PathVariable Long pacienteId) {
+        List<Cita> citas = citaService.obtenerCitasPorPaciente(pacienteId);
+        return new ResponseEntity<>(citas, HttpStatus.OK);
+    }
+
+    //endpoint para ver la agenda de un medico
+    @GetMapping("/medico/{medicoId}")
+    public ResponseEntity<List<Cita>> listarCitasPorMedico(@PathVariable Long medicoId) {
+        List<Cita> citas = citaService.obtenerCitasPorMedico(medicoId);
+        return new ResponseEntity<>(citas, HttpStatus.OK);
     }
 
 }

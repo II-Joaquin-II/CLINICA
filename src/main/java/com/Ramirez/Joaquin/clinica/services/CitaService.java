@@ -27,7 +27,7 @@ public class CitaService {
 
     public Cita agendarCita(CitaDTO citaDTO) {
         //1. Buscamos al paciente y al médico en la base de datos usando los IDs del DTO
-        //En un proyecto real, aquí ser maneja el error si no existen, por ahora usare un orElseThrow
+        //aquí ser maneja el error si no existen, por ahora usare un orElseThrow
         Paciente paciente = pacienteRepository.findById(citaDTO.getPacienteId()).orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
 
         Medico medico = medicoRepository.findById(citaDTO.getMedicoId()).orElseThrow(() -> new RuntimeException("Médico no encontrado"));
@@ -63,8 +63,21 @@ public class CitaService {
         return citaRepository.save(cita);
     }
 
+    //Metodo para listar todas las citas
     public List<Cita> listarCitas() {
         return citaRepository.findAll();
     }
+
+    //Metodo para obtener el historial del paciente por su ID
+    public List<Cita> obtenerCitasPorPaciente(Long pacienteId) {
+        pacienteRepository.findById(pacienteId).orElseThrow(() -> new RuntimeException("Paciente no encontrado con id " + pacienteId));
+        return citaRepository.findByPacienteId(pacienteId);
+    }
+
+    //Metodo para obtener la agenda del medico por su ID
+    public List<Cita> obtenerCitasPorMedico(Long medicoId) {
+        medicoRepository.findById(medicoId).orElseThrow(() -> new RuntimeException("Médico no encontrado con id " + medicoId));
+        return citaRepository.findByMedicoId(medicoId);
+    } 
 
 }
