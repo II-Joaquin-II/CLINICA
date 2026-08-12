@@ -32,12 +32,12 @@ public class PacienteService {
     }
 
     //Metodo buscar pacientes por id
-    public Paciente listarPacientesPorId(Long id) {
+    public Paciente obtenerPacientePorId(Long id) {
         return pacienteRepository.findById(id).orElseThrow(() -> new RuntimeException("Paciente no encontrado con id: " + id));
     }
     
     //Metodo para buscar pacientes por DNI
-    public Paciente listarPacientesPorDni(String dni) {
+    public Paciente obtenerPacientePorDni(String dni) {
         return pacienteRepository.findByDni(dni).orElseThrow(() -> new RuntimeException("DNI del paciente no encontrado: " + dni));
     }
 

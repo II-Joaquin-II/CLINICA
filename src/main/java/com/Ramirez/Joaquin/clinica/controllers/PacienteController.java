@@ -61,15 +61,15 @@ public class PacienteController {
 
     //endpoint para buscar pacientes por id
     @GetMapping("/{id}")
-    public ResponseEntity<Paciente> listarPacientesPorId(@PathVariable Long id) {
-        Paciente paciente = pacienteService.listarPacientesPorId(id);
+    public ResponseEntity<Paciente> obtenerPacientePorId(@PathVariable Long id) {
+        Paciente paciente = pacienteService.obtenerPacientePorId(id);
         return new ResponseEntity<>(paciente, HttpStatus.OK);
     }
 
     //endpoint para buscar pacientes por DNI
     @GetMapping("/dni/{dni}")
-    public ResponseEntity<Paciente> listarPacientesPorDni(@PathVariable String dni) {
-        Paciente paciente = pacienteService.listarPacientesPorDni(dni);
+    public ResponseEntity<Paciente> obtenerPacientePorDni(@PathVariable String dni) {
+        Paciente paciente = pacienteService.obtenerPacientePorDni(dni);
         return new ResponseEntity<>(paciente, HttpStatus.OK);
     }
 
