@@ -1,10 +1,8 @@
 package com.Ramirez.Joaquin.clinica.services;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.Ramirez.Joaquin.clinica.models.Medico;
 import com.Ramirez.Joaquin.clinica.repositories.MedicoRepository;
 
@@ -22,6 +20,16 @@ public class MedicoService {
     //Metodo para listar todos los medicos
     public List<Medico> listarMedicos() {
         return medicoRepository.findAll();
+    }
+
+    //Metodo para buscar un medico por id
+    public Medico obtenerMedicoPorId(Long id) {
+        return medicoRepository.findById(id).orElseThrow(() -> new RuntimeException("Médico no encontrado con id: " + id));
+    }
+
+    //Metodo para buscar un medico por matricula
+    public Medico obtenerMedicoPorMatricula(String matricula) {
+        return medicoRepository.findByMatricula(matricula).orElseThrow(() -> new RuntimeException("Matrícula del médico no encontrada: " + matricula));
     }
 
 }
