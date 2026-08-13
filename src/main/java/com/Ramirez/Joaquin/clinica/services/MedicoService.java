@@ -32,4 +32,16 @@ public class MedicoService {
         return medicoRepository.findByMatricula(matricula).orElseThrow(() -> new RuntimeException("Matrícula del médico no encontrada: " + matricula));
     }
 
+    //Metodo para actualizar los datos de los medicos 
+    public Medico actualizarMedico(Long id, Medico datosnuevos) {
+        Medico medico = medicoRepository.findAllById(id).orElseThrow(() -> new RuntimeException("Medico no encontrado"));
+        
+        medico.setNombre(datosnuevos.getNombre());
+        medico.setApellido(datosnuevos.getApellido());
+        medico.setEspecialidad(datosnuevos.getEspecialidad());
+        medico.setMatricula(datosnuevos.getMatricula());
+
+        return medicoRepository.save(medico);
+    }
+
 }

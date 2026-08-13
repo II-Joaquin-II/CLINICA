@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,6 +47,13 @@ public class MedicoController {
     public ResponseEntity<Medico> obtenerMedicoPorMatricula(@PathVariable String matricula) {
         Medico medico = medicoService.obtenerMedicoPorMatricula(matricula);
         return new ResponseEntity<>(medico, HttpStatus.OK);
+    }
+
+    //endpoint para actualizar los datos de los medicos
+    @PutMapping("/{id}")
+    public ResponseEntity<Medico> actualizarMedico(@PathVariable Long id, @RequestBody Medico medico) {
+        Medico medicoActualizado = medicoService.actualizarMedico(id, medico);
+        return new ResponseEntity<>(medicoActualizado, HttpStatus.OK);
     }
 
 }

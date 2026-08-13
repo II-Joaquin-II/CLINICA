@@ -11,4 +11,6 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> {
     //Spring creara automáticamente la consulta para buscar un médico por su matrícula
     Optional<Medico> findByMatricula(String matricula);
 
+    Optional<Medico> findAllById(Long id);
+
 }
