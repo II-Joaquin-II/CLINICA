@@ -10,6 +10,8 @@ public interface PacienteRepository extends JpaRepository<Paciente, Long> {
 
     //Spring creara automáticamente la consulta para buscar un paciente por su DNI
     Optional<Paciente> findByDni(String dni);
+
+    Optional<Paciente> findAllById(Long id);
     
 }
 

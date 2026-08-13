@@ -41,4 +41,17 @@ public class PacienteService {
         return pacienteRepository.findByDni(dni).orElseThrow(() -> new RuntimeException("DNI del paciente no encontrado: " + dni));
     }
 
+    //Metodo para actualizar pacientes
+    public Paciente actualizarPaciente(Long id, Paciente datosnuevos) {
+        Paciente paciente = pacienteRepository.findAllById(id).orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
+
+        paciente.setNombre(datosnuevos.getNombre());
+        paciente.setApellido(datosnuevos.getApellido());
+        paciente.setTelefono(datosnuevos.getTelefono());
+        paciente.setEmail(datosnuevos.getEmail());
+
+        return pacienteRepository.save(paciente);
+
+    }
+
 }

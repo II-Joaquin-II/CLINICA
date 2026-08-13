@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -60,6 +61,13 @@ public class PacienteController {
     public ResponseEntity<Paciente> obtenerPacientePorDni(@PathVariable String dni) {
         Paciente paciente = pacienteService.obtenerPacientePorDni(dni);
         return new ResponseEntity<>(paciente, HttpStatus.OK);
+    }
+
+    //endpoint para actualizar pacientes
+    @PutMapping("/{id}")
+    public ResponseEntity<Paciente> actualizarPaciente(@PathVariable Long id, @RequestBody Paciente paciente) {
+        Paciente pacienteActualizado = pacienteService.actualizarPaciente(id, paciente);
+        return new ResponseEntity<>(pacienteActualizado, HttpStatus.OK);
     }
 
 }
